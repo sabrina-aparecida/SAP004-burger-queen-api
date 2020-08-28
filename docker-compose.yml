@@ -3,7 +3,7 @@ version: '3.4'
 services:
   dev:
     image: node:12-alpine
-    container_name: bq-api-node
+    container_name: new_store_api_dev
     command:  npm run dev
     working_dir: /app
     ports:
@@ -11,26 +11,23 @@ services:
     volumes:
       - ./:/app:cached
     networks:
-      - bq-network
+      - store-network
     depends_on:
       - db
 
   db:
     image: postgres
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=example
-    container_name: bq-api-node_db
+    container_name: new_store_db
     ports:
       - "5432:5432"
     volumes:
       - database:/var/lib/postgresql/data
     networks:
-      - bq-network
+      - store-network
 
 volumes:
   database:
 
 networks:
-  bq-network:
+  store-network:
     driver: bridge
